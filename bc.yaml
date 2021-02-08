@@ -1,14 +1,14 @@
 kind: "BuildConfig"
 apiVersion: "v1"
 metadata:
-  name: "s2i-example-dotnet-multi-project" 
+  name: "s2i-example-dotnet-multi-project-web"
 spec:
-  runPolicy: "Serial" 
-  triggers: 
-  source: 
+  runPolicy: "Serial"
+  triggers:
+  source:
     git:
       uri: "https://github.com/omajid/s2i-example-dotnet-multi-project"
-  strategy: 
+  strategy:
     sourceStrategy:
       from:
         kind: "ImageStreamTag"
@@ -16,3 +16,22 @@ spec:
       env:
         - name: "DOTNET_STARTUP_PROJECT"
           value: "Web/Web.csproj"
+---
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "s2i-example-dotnet-multi-project-web-api"
+spec:
+  runPolicy: "Serial"
+  triggers:
+  source:
+    git:
+      uri: "https://github.com/omajid/s2i-example-dotnet-multi-project"
+  strategy:
+    sourceStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "dotnet:3.1"
+      env:
+        - name: "DOTNET_STARTUP_PROJECT"
+          value: "Web.Api/Web.Api.csproj"
